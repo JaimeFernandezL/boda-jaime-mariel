@@ -315,7 +315,11 @@
             const attendance = document.getElementById('attendance').value;
             const count = document.getElementById('guestCount').value;
             
-            const miNumero = "18092988182","18295526393"; 
+            const miNumero = ["18092988182","18295526393"]; 
+            const urlEncoded = encodeURIComponent(mensaje);
+miNumero.forEach(numero => {
+    window.open(`https://wa.me/${numero}?text=${urlEncoded}`, '_blank');
+});
             
             let mensaje = `¡Hola Jaime y Mariel!\nSoy *${name}*.\n\nQuería confirmarles que *${attendance}* a su boda.`;
             
