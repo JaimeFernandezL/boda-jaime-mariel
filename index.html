@@ -248,6 +248,13 @@
                     <label>Acompañantes (Incluyéndote)</label>
                     <input type="number" id="guestCount" min="0" max="5" value="1" required>
                 </div>
+                <div class="form-group">
+                        <label>¿A quién le confirmarás?</label>
+                        <select id="recipient" required>
+                        <option value="18092988182">A Jaime</option>
+                        <option value="18295526393">A Mariel</option>
+                </select>
+                </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Enviar por WhatsApp</button>
             </form>
         </div>
@@ -308,30 +315,32 @@
         }, 1000);
 
         // 4. Formulario de WhatsApp Dinámico
-        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+            document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Evita recargar la página
 
-            const name = document.getElementById('guestName').value;
-            const attendance = document.getElementById('attendance').value;
-            const count = document.getElementById('guestCount').value;
-            
-            const miNumero = ["18092988182","18295526393"]; 
-            const urlEncoded = encodeURIComponent(mensaje);
-miNumero.forEach(numero => {
-    window.open(`https://wa.me/${numero}?text=${urlEncoded}`, '_blank');
-});
-            
-            let mensaje = `¡Hola Jaime y Mariel!\nSoy *${name}*.\n\nQuería confirmarles que *${attendance}* a su boda.`;
-            
+            // Capturamos los valores del formulario
+                const name = document.getElementById('guestName').value;
+                const attendance = document.getElementById('attendance').value;
+                const count = document.getElementById('guestCount').value;
+    
+        // Capturamos el número seleccionado (Jaime o Mariel)
+                const numeroElegido = document.getElementById('recipient').value;
+    
+        // 1. PRIMERO construimos el mensaje
+                let mensaje = `¡Hola Jaime y Mariel!\nSoy *${name}*.\n\nQuería confirmarles que *${attendance}* a su boda.`;
+    
             if(attendance.includes("Si")) {
-                mensaje += `\nSeremos un total de *${count} persona(s)*.`;
+            mensaje += `\nSeremos un total de *${count} persona(s)*.`;
             }
-            
-            mensaje += `\n\n¡Felicidades! 🎉`;
+    
+        mensaje += `\n\n¡Felicidades! 🎉`;
 
-            const urlEncoded = encodeURIComponent(mensaje);
-            window.open(`https://wa.me/${miNumero}?text=${urlEncoded}`, '_blank');
-        });
+        // 2. LUEGO codificamos el texto para la URL
+                const urlEncoded = encodeURIComponent(mensaje);
+        
+    // 3. FINALMENTE abrimos una sola pestaña con el número seleccionado
+                window.open(`https://wa.me/${numeroElegido}?text=${urlEncoded}`, '_blank');
+});
     </script>
 </body>
 </html>
