@@ -168,6 +168,29 @@
             font-size: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             z-index: 1000; display: none; align-items: center; justify-content: center;
         }
+        .gift-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .gift-text { font-size: 0.95rem; margin-bottom: 25px; padding: 0 10px; }
+        
+        .transfer-title { 
+            font-family: var(--font-script); 
+            font-size: 2.8rem; 
+            color: var(--sage-green); 
+            text-transform: none; /* Evita que se ponga en mayúsculas */
+            letter-spacing: 0;
+            margin-bottom: 10px;
+        }
+        
+        .transfer-text { font-size: 0.9rem; color: #666; margin-bottom: 20px; padding: 0 15px; }
+        
+        .qr-container {
+            background: #fff; padding: 15px; border-radius: 15px;
+            display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 15px; border: 1px solid #e2e0d8;
+        }
+        
+        .qr-image { width: 180px; height: 180px; object-fit: contain; }
+        .account-owner { font-weight: 600; color: var(--sage-dark); font-size: 1.1rem; }
+        .account-number { font-family: monospace; font-size: 0.9rem; color: #555; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -223,8 +246,24 @@
         <div class="section-box">
             <h3>Detalles</h3>
             <p><strong>Código de Vestimenta:</strong> Formal<br><small>(Favor de evitar el color blanco)</small></p>
-            <p style="margin-top: 15px;"><strong>Mesa de Regalos:</strong><br>El mejor regalo es tu presencia, pero si deseas tener un detalle con nosotros:</p>
-            <p style="font-family: monospace; background: #f1f1f1; padding: 10px; border-radius: 5px; margin-top:10px;">Cuenta Banco: <br>Titular: Jaime Fernández</p>
+        </div>
+
+        <!-- Sugerencia de Regalos con QR -->
+        <div class="section-box">
+            <div class="gift-icon">🎁</div>
+            <h2>Sugerencia de Regalos</h2>
+            <p class="gift-text">El mejor regalo es tu presencia, pero si deseas tener un detalle con nosotros, les dejamos esta opción:</p>
+            
+            <h3 class="transfer-title">Transferencia</h3>
+            <p class="transfer-text">No es necesario estar cerca, para hacer sentir el amor y el cariño. Si así lo prefieres puedes realizar una transferencia.</p>
+            
+            <div class="qr-container">
+                <!-- ASEGÚRATE DE SUBIR TU IMAGEN DEL QR A GITHUB CON ESTE NOMBRE -->
+                <img src="qr-banco.jpeg" alt="Código QR para transferencia" class="qr-image" onerror="this.src='https://via.placeholder.com/180?text=Sube+tu+QR+aqui'">
+            </div>
+            
+            <p class="account-owner">Titular: Jaime Fernández</p>
+            <p class="account-number">Cuenta: 123456789 (Banco XYZ)</p>
         </div>
 
         <!-- Formulario Inteligente RSVP -->
