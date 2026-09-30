@@ -191,6 +191,53 @@
         .qr-image { width: 180px; height: 180px; object-fit: contain; }
         .account-owner { font-weight: 600; color: var(--sage-dark); font-size: 1.1rem; }
         .account-number { font-family: monospace; font-size: 0.9rem; color: #555; margin-top: 5px; }
+        /* ----- VENTANA EMERGENTE (MODAL QR) ----- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+            display: flex; justify-content: center; align-items: center;
+            z-index: 2000;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            backdrop-filter: blur(3px); /* Hace que el fondo se vea borroso */
+        }
+        
+        .modal-overlay.active {
+            opacity: 1; visibility: visible;
+        }
+        
+        .modal-content {
+            background: var(--cream);
+            padding: 40px 20px 30px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            max-width: 90%;
+            width: 350px;
+            transform: translateY(30px) scale(0.95);
+            transition: transform 0.4s ease;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            border: 2px solid var(--sage-green);
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+        
+        .close-btn {
+            position: absolute; top: 10px; right: 15px;
+            font-size: 2rem; color: var(--sage-dark);
+            cursor: pointer; border: none; background: transparent;
+            line-height: 1; transition: transform 0.2s;
+        }
+        
+        .close-btn:hover { transform: scale(1.2); }
+        
+        .modal-content .qr-image {
+            width: 200px; height: 200px; object-fit: contain; margin-bottom: 15px;
+            border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e2e0d8;
+        }
     </style>
 </head>
 <body>
@@ -248,22 +295,13 @@
             <p><strong>Código de Vestimenta:</strong> Formal<br><small>(Favor de evitar el color blanco)</small></p>
         </div>
 
-        <!-- Sugerencia de Regalos con QR -->
+       <!-- Sugerencia de Regalos -->
         <div class="section-box">
             <div class="gift-icon">🎁</div>
             <h2>Sugerencia de Regalos</h2>
-            <p class="gift-text">El mejor regalo es tu presencia, pero si deseas tener un detalle con nosotros, les dejamos esta opción:</p>
-            
-            <h3 class="transfer-title">Transferencia</h3>
-            <p class="transfer-text">No es necesario estar cerca, para hacer sentir el amor y el cariño. Si así lo prefieres puedes realizar una transferencia.</p>
-            
-            <div class="qr-container">
-                <!-- ASEGÚRATE DE SUBIR TU IMAGEN DEL QR A GITHUB CON ESTE NOMBRE -->
-                <img src="qr BanREservas.jfif" alt="Código QR para transferencia" class="qr-image" onerror="this.src='https://via.placeholder.com/180?text=Sube+tu+QR+aqui'">
-            </div>
-            
-            <p class="account-owner">Titular: Jaime Fernández</p>
-            <p class="account-number">Cuenta: 9607086385 (Banco Banreservas)</p>
+            <p class="gift-text">El mejor regalo es tu presencia, pero si deseas tener un detalle con nosotros, te dejamos esta opción:</p>
+            <!-- Este botón abrirá la ventana emergente -->
+            <button id="btnOpenQr" class="btn btn-outline" style="margin-top: 10px; font-size: 1rem;">💌 Ver Datos Bancarios</button>
         </div>
 
         <!-- Formulario Inteligente RSVP -->
@@ -382,6 +420,19 @@
     // 3. FINALMENTE abrimos una sola pestaña con el número seleccionado
                 window.open(`https://wa.me/${numeroElegido}?text=${urlEncoded}`, '_blank');
 });
+        <!-- VENTANA EMERGENTE PARA EL QR -->
+    <div id="qrModal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="btnCloseQr" class="close-btn">&times;</button>
+            <h3 class="transfer-title" style="font-size: 2.3rem;">Transferencia</h3>
+            <p class="transfer-text" style="margin-bottom: 20px;">No es necesario estar cerca, para hacer sentir el amor y el cariño.</p>
+            
+            <img src="qr-banco.jpeg" alt="Código QR para transferencia" class="qr-image" onerror="this.src='https://via.placeholder.com/200?text=Sube+tu+QR+aqui'">
+            
+            <p class="account-owner">Titular: Jaime Fernández</p>
+            <p class="account-number">Cuenta: 123456789 (Banco XYZ)</p>
+        </div>
+    </div>
     </script>
 </body>
 </html>
