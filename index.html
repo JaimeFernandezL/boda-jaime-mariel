@@ -67,10 +67,13 @@
             z-index: 10;
         }
 
-        .seal-img:hover {
-            animation: none;
-            transform: scale(1.15); 
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+        /* ARREGLO: El hover (agrandarse) solo se aplicará en computadoras con ratón, no en celulares */
+        @media (hover: hover) and (pointer: fine) {
+            .seal-img:hover {
+                animation: none;
+                transform: scale(1.15); 
+                filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+            }
         }
 
         @keyframes pulse-seal {
@@ -310,14 +313,14 @@
 
     </div>
 
-    <!-- VENTANA EMERGENTE PARA EL QR (AQUÍ AFUERA DEL SCRIPT) -->
+    <!-- VENTANA EMERGENTE PARA EL QR -->
     <div id="qrModal" class="modal-overlay">
         <div class="modal-content">
             <button id="btnCloseQr" class="close-btn">&times;</button>
             <h3 class="transfer-title" style="font-size: 2.3rem;">Transferencia</h3>
             <p class="transfer-text" style="margin-bottom: 20px;">No es necesario estar cerca, para hacer sentir el amor y el cariño.</p>
             
-            <img src="qr-banreservas.jfif" alt="Código QR para transferencia" class="qr-image" onerror="this.src='https://via.placeholder.com/200?text=Sube+tu+QR+aqui'">
+            <img src="qr BanREservas.jpg" alt="Código QR para transferencia" class="qr-image" onerror="this.src='https://via.placeholder.com/200?text=Sube+tu+QR+aqui'">
             
             <p class="account-owner">Titular: Jaime Fernández</p>
             <p class="account-number">Cuenta: 9607086385 (Banco Banreservas)</p>
@@ -330,12 +333,14 @@
         const detailsScreen = document.getElementById('details-screen');
         const musica = document.getElementById('musicaFondo');
         const btnMusica = document.getElementById('btnMusica');
+        const sealBtn = document.getElementById('sealBtn');
 
         musica.volume = 0.5;
         
-        const sealBtn = document.getElementById('sealBtn');
-
-        sealBtn.addEventListener('click', () => {
+        // ARREGLO PARA CELULARES: Capturamos la función de abrir en una variable
+        const abrirInvitacion = (e) => {
+            if(e) e.preventDefault(); // Esta línea es la que elimina el bug del doble toque fantasma
+            
             musica.play().catch(e => console.log("Auto-play bloqueado por el navegador"));
             btnMusica.style.display = 'flex';
 
@@ -345,7 +350,11 @@
             setTimeout(() => {
                 detailsScreen.classList.add('show-details');
             }, 100); 
-        });
+        };
+
+        // Escuchamos el clic normal (PC) y el toque nativo de celular (touchstart)
+        sealBtn.addEventListener('click', abrirInvitacion);
+        sealBtn.addEventListener('touchstart', abrirInvitacion);
 
         // 2. Control de Música
         btnMusica.addEventListener('click', () => {
@@ -414,4 +423,4 @@
     </script>
 </body>
 </html>
-
+        
