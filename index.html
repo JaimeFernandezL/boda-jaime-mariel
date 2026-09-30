@@ -27,7 +27,7 @@
             background-size: 20px 20px;
         }
 
-        /* ----- PANTALLA INICIAL (IMAGEN) ----- */
+        /* ----- PANTALLA INICIAL (IMAGEN) Y CORRECCIÓN PARA CELULARES ----- */
         #envelope-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100vh;
@@ -35,36 +35,31 @@
             display: flex; justify-content: center; align-items: center;
             z-index: 100;
             transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+            padding: 15px;
         }
 
-        /* Contenedor que mantiene alineadas las imágenes */
+        /* Contenedor que abraza la imagen exactamente */
         .image-container {
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 100%;
-            max-height: 100vh;
+            width: 100%;
+            max-width: 500px;
         }
 
         /* La imagen de fondo estática */
         .base-img {
-            max-width: 100vw;
-            max-height: 100vh;
-            object-fit: contain;
+            width: 100%;
+            height: auto;
             box-shadow: 0 5px 25px rgba(0,0,0,0.15);
             display: block;
         }
 
-        /* EL TRUCO: Segunda imagen idéntica recortada solo en el área del sello */
+        /* Segunda imagen idéntica recortada (Sello) */
         .seal-img {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            object-fit: contain;
-            /* Si el sello no encaja perfecto, ajusta estos valores: 
-               circle(TAMAÑO at X% Y%) */
-            clip-path: circle(7% at 50% 53%);
+            clip-path: circle(12% at 50% 53%);
+            -webkit-clip-path: circle(12% at 50% 53%); /* Vital para iPhone */
             transform-origin: 50% 53%;
             cursor: pointer;
             transition: transform 0.3s ease, filter 0.3s ease;
@@ -72,32 +67,27 @@
             z-index: 10;
         }
 
-        /* Al pasar el mouse, el sello se agranda y brilla */
         .seal-img:hover {
             animation: none;
             transform: scale(1.15); 
             filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
         }
 
-        /* Animación de latido para llamar la atención del invitado */
         @keyframes pulse-seal {
             0% { transform: scale(1); filter: brightness(1); }
             50% { transform: scale(1.08); filter: brightness(1.15); }
             100% { transform: scale(1); filter: brightness(1); }
         }
 
-        /* Anillo opcional que pulsa detrás del sello */
         .pulse-ring {
             position: absolute;
-            top: 53%;
-            left: 50%;
-            width: 14%;
+            top: 53%; left: 50%; width: 24%;
             aspect-ratio: 1 / 1;
             transform: translate(-50%, -50%);
             border-radius: 50%;
             box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
             animation: ring-pulse 2s infinite;
-            pointer-events: none; /* Que no bloquee el clic */
+            pointer-events: none;
             z-index: 5;
         }
 
@@ -168,6 +158,8 @@
             font-size: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             z-index: 1000; display: none; align-items: center; justify-content: center;
         }
+        
+        /* Estilos Ventana Emergente QR */
         .gift-icon { font-size: 2.5rem; margin-bottom: 10px; }
         .gift-text { font-size: 0.95rem; margin-bottom: 25px; padding: 0 10px; }
         
@@ -175,36 +167,24 @@
             font-family: var(--font-script); 
             font-size: 2.8rem; 
             color: var(--sage-green); 
-            text-transform: none; /* Evita que se ponga en mayúsculas */
+            text-transform: none;
             letter-spacing: 0;
             margin-bottom: 10px;
         }
         
         .transfer-text { font-size: 0.9rem; color: #666; margin-bottom: 20px; padding: 0 15px; }
         
-        .qr-container {
-            background: #fff; padding: 15px; border-radius: 15px;
-            display: inline-block; box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            margin-bottom: 15px; border: 1px solid #e2e0d8;
-        }
-        
-        .qr-image { width: 180px; height: 180px; object-fit: contain; }
-        .account-owner { font-weight: 600; color: var(--sage-dark); font-size: 1.1rem; }
-        .account-number { font-family: monospace; font-size: 0.9rem; color: #555; margin-top: 5px; }
-        /* ----- VENTANA EMERGENTE (MODAL QR) ----- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+            background: rgba(0, 0, 0, 0.6);
             display: flex; justify-content: center; align-items: center;
             z-index: 2000;
             opacity: 0; visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
-            backdrop-filter: blur(3px); /* Hace que el fondo se vea borroso */
+            backdrop-filter: blur(3px);
         }
         
-        .modal-overlay.active {
-            opacity: 1; visibility: visible;
-        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
         
         .modal-content {
             background: var(--cream);
@@ -220,9 +200,7 @@
             border: 2px solid var(--sage-green);
         }
         
-        .modal-overlay.active .modal-content {
-            transform: translateY(0) scale(1);
-        }
+        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
         
         .close-btn {
             position: absolute; top: 10px; right: 15px;
@@ -251,13 +229,8 @@
     <!-- PANTALLA INICIAL: IMAGEN Y SELLO CLICABLE -->
     <div id="envelope-screen">
         <div class="image-container">
-            <!-- Imagen de fondo que no hace nada al hacerle clic -->
             <img src="boda1.jpeg" alt="Fondo Invitación" class="base-img">
-            
-            <!-- Imagen superpuesta y recortada en círculo que hace la función de botón -->
             <img src="boda1.jpeg" alt="Abrir Invitación" class="seal-img" id="sealBtn" title="Haz clic en el sello para abrir">
-            
-            <!-- Anillo que pulsa detrás del sello para invitar al clic -->
             <div class="pulse-ring"></div>
         </div>
     </div>
@@ -300,7 +273,6 @@
             <div class="gift-icon">🎁</div>
             <h2>Sugerencia de Regalos</h2>
             <p class="gift-text">El mejor regalo es tu presencia, pero si deseas tener un detalle con nosotros, te dejamos esta opción:</p>
-            <!-- Este botón abrirá la ventana emergente -->
             <button id="btnOpenQr" class="btn btn-outline" style="margin-top: 10px; font-size: 1rem;">💌 Ver Datos Bancarios</button>
         </div>
 
@@ -326,16 +298,30 @@
                     <input type="number" id="guestCount" min="0" max="2" value="1" required>
                 </div>
                 <div class="form-group">
-                        <label>¿A quién le confirmarás?</label>
-                        <select id="recipient" required>
+                    <label>¿A quién le confirmarás?</label>
+                    <select id="recipient" required>
                         <option value="18092988182">A Jaime</option>
                         <option value="18295526393">A Mariel</option>
-                </select>
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Enviar por WhatsApp</button>
             </form>
         </div>
 
+    </div>
+
+    <!-- VENTANA EMERGENTE PARA EL QR (AQUÍ AFUERA DEL SCRIPT) -->
+    <div id="qrModal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="btnCloseQr" class="close-btn">&times;</button>
+            <h3 class="transfer-title" style="font-size: 2.3rem;">Transferencia</h3>
+            <p class="transfer-text" style="margin-bottom: 20px;">No es necesario estar cerca, para hacer sentir el amor y el cariño.</p>
+            
+            <img src="qr-banreservas.jfif" alt="Código QR para transferencia" class="qr-image" onerror="this.src='https://via.placeholder.com/200?text=Sube+tu+QR+aqui'">
+            
+            <p class="account-owner">Titular: Jaime Fernández</p>
+            <p class="account-number">Cuenta: 9607086385 (Banco Banreservas)</p>
+        </div>
     </div>
 
     <script>
@@ -347,21 +333,15 @@
 
         musica.volume = 0.5;
         
-        // AHORA SOLO EL SELLO ACTIVA LA TRANSICIÓN
         const sealBtn = document.getElementById('sealBtn');
 
         sealBtn.addEventListener('click', () => {
-            // Iniciar Música
             musica.play().catch(e => console.log("Auto-play bloqueado por el navegador"));
             btnMusica.style.display = 'flex';
 
-            // Desvanecer pantalla inicial
             envelopeScreen.classList.add('fade-out');
-            
-            // Mostrar detalles
             detailsScreen.style.display = 'block';
             
-            // Pequeño delay para la transición de opacidad
             setTimeout(() => {
                 detailsScreen.classList.add('show-details');
             }, 100); 
@@ -394,45 +374,43 @@
         }, 1000);
 
         // 4. Formulario de WhatsApp Dinámico
-            document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Evita recargar la página
-
-            // Capturamos los valores del formulario
-                const name = document.getElementById('guestName').value;
-                const attendance = document.getElementById('attendance').value;
-                const count = document.getElementById('guestCount').value;
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            const name = document.getElementById('guestName').value;
+            const attendance = document.getElementById('attendance').value;
+            const count = document.getElementById('guestCount').value;
+            const numeroElegido = document.getElementById('recipient').value;
     
-        // Capturamos el número seleccionado (Jaime o Mariel)
-                const numeroElegido = document.getElementById('recipient').value;
-    
-        // 1. PRIMERO construimos el mensaje
-                let mensaje = `¡Hola Jaime y Mariel!\nSoy *${name}*.\n\nQuería confirmarles que *${attendance}* a su boda.`;
+            let mensaje = `¡Hola Jaime y Mariel!\nSoy *${name}*.\n\nQuería confirmarles que *${attendance}* a su boda.`;
     
             if(attendance.includes("Si")) {
-            mensaje += `\nSeremos un total de *${count} persona(s)*.`;
+                mensaje += `\nSeremos un total de *${count} persona(s)*.`;
             }
     
-        mensaje += `\n\n¡Felicidades! 🎉`;
+            mensaje += `\n\n¡Felicidades! 🎉`;
 
-        // 2. LUEGO codificamos el texto para la URL
-                const urlEncoded = encodeURIComponent(mensaje);
-        
-    // 3. FINALMENTE abrimos una sola pestaña con el número seleccionado
-                window.open(`https://wa.me/${numeroElegido}?text=${urlEncoded}`, '_blank');
-});
-        <!-- VENTANA EMERGENTE PARA EL QR -->
-    <div id="qrModal" class="modal-overlay">
-        <div class="modal-content">
-            <button id="btnCloseQr" class="close-btn">&times;</button>
-            <h3 class="transfer-title" style="font-size: 2.3rem;">Transferencia</h3>
-            <p class="transfer-text" style="margin-bottom: 20px;">No es necesario estar cerca, para hacer sentir el amor y el cariño.</p>
-            
-            <img src="qr BanREservas.jfif" alt="Código QR para transferencia" class="qr-image" onerror="this.src='https://via.placeholder.com/200?text=Sube+tu+QR+aqui'">
-            
-            <p class="account-owner">Titular: Jaime Fernández</p>
-            <p class="account-number">Cuenta: 9607086385 (Banco Banreservas)</p>
-        </div>
-    </div>
+            const urlEncoded = encodeURIComponent(mensaje);
+            window.open(`https://wa.me/${numeroElegido}?text=${urlEncoded}`, '_blank');
+        });
+
+        // 5. Lógica de la Ventana Emergente (QR)
+        const btnOpenQr = document.getElementById('btnOpenQr');
+        const btnCloseQr = document.getElementById('btnCloseQr');
+        const qrModal = document.getElementById('qrModal');
+
+        btnOpenQr.addEventListener('click', () => {
+            qrModal.classList.add('active');
+        });
+
+        btnCloseQr.addEventListener('click', () => {
+            qrModal.classList.remove('active');
+        });
+
+        qrModal.addEventListener('click', (e) => {
+            if(e.target === qrModal) {
+                qrModal.classList.remove('active');
+            }
+        });
     </script>
 </body>
 </html>
