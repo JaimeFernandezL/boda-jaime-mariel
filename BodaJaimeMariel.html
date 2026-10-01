@@ -402,6 +402,23 @@
                 qrModal.classList.remove('active');
             }
         });
+        // 6. Detener música al minimizar la página o cambiar de pestaña (Especial para celulares)
+        let estabaSonando = false;
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                // El usuario minimizó la página o cambió de pestaña
+                estabaSonando = !musica.paused; // Guardamos si la música estaba encendida
+                musica.pause();
+                btnMusica.innerHTML = '🔇';
+            } else {
+                // El usuario regresó a la invitación
+                if (estabaSonando) {
+                    musica.play().catch(e => console.log("Auto-play bloqueado al regresar"));
+                    btnMusica.innerHTML = '🔊';
+                }
+            }
+        });
     </script>
 </body>
 </html>
