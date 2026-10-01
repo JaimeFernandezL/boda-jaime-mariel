@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestra Boda | Jaime & Mariel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --sage-green: #7ca383;
@@ -16,7 +19,11 @@
             --font-script: 'Great Vibes', cursive;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             background-color: var(--cream);
@@ -27,39 +34,43 @@
             background-size: 20px 20px;
         }
 
-        /* ----- PANTALLA INICIAL (IMAGEN) Y CORRECCIÓN PARA CELULARES ----- */
+        /* ----- PANTALLA INICIAL (IMAGEN) ----- */
         #envelope-screen {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100vh;
-            background: #ebe5dd; 
-            display: flex; justify-content: center; align-items: center;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #ebe5dd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             z-index: 100;
             transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
             padding: 15px;
         }
 
-        /* Contenedor que abraza la imagen exactamente */
         .image-container {
             position: relative;
             width: 100%;
             max-width: 500px;
         }
 
-        /* La imagen de fondo estática */
         .base-img {
             width: 100%;
             height: auto;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
             display: block;
         }
 
-        /* Segunda imagen idéntica recortada (Sello) */
         .seal-img {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             clip-path: circle(12% at 50% 53%);
-            -webkit-clip-path: circle(12% at 50% 53%); /* Vital para iPhone */
+            -webkit-clip-path: circle(12% at 50% 53%);
             transform-origin: 50% 53%;
             cursor: pointer;
             transition: transform 0.3s ease, filter 0.3s ease;
@@ -67,24 +78,36 @@
             z-index: 10;
         }
 
-        /* ARREGLO: El hover (agrandarse) solo se aplicará en computadoras con ratón, no en celulares */
         @media (hover: hover) and (pointer: fine) {
             .seal-img:hover {
                 animation: none;
-                transform: scale(1.15); 
-                filter: drop-shadow(0 0 10px rgba(255,255,255,0.8));
+                transform: scale(1.15);
+                filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
             }
         }
 
         @keyframes pulse-seal {
-            0% { transform: scale(1); filter: brightness(1); }
-            50% { transform: scale(1.08); filter: brightness(1.15); }
-            100% { transform: scale(1); filter: brightness(1); }
+            0% {
+                transform: scale(1);
+                filter: brightness(1);
+            }
+
+            50% {
+                transform: scale(1.08);
+                filter: brightness(1.15);
+            }
+
+            100% {
+                transform: scale(1);
+                filter: brightness(1);
+            }
         }
 
         .pulse-ring {
             position: absolute;
-            top: 53%; left: 50%; width: 24%;
+            top: 53%;
+            left: 50%;
+            width: 24%;
             aspect-ratio: 1 / 1;
             transform: translate(-50%, -50%);
             border-radius: 50%;
@@ -95,100 +118,226 @@
         }
 
         @keyframes ring-pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
-            70% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
         }
 
-        .fade-out { opacity: 0; visibility: hidden; }
+        .fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
 
         /* ----- PANTALLA DE DETALLES ----- */
         #details-screen {
-            max-width: 600px; margin: 0 auto; padding: 40px 20px;
-            opacity: 0; transform: translateY(30px);
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            opacity: 0;
+            transform: translateY(30px);
             transition: opacity 1.5s ease 0.2s, transform 1.5s ease 0.2s;
             display: none;
         }
 
         .show-details {
-            display: block !important; opacity: 1 !important; transform: translateY(0) !important;
+            display: block !important;
+            opacity: 1 !important;
+            transform: translateY(0) !important;
         }
 
         .section-box {
-            background: white; padding: 30px; border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 30px; text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+            text-align: center;
             border-top: 4px solid var(--sage-green);
         }
 
-        h1 { font-family: var(--font-script); font-size: 3rem; color: var(--sage-dark); margin-bottom: 15px; }
-        h2 { font-family: var(--font-script); font-size: 2.5rem; color: var(--sage-dark); margin-bottom: 15px; }
-        h3 { font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase; }
-        p { line-height: 1.6; margin-bottom: 10px; color: #555; }
+        /* NUEVA CLASE PARA LAS IMÁGENES DENTRO DE LOS CUADROS */
+        .content-img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Truco para esconder la mitad inferior de la imagen de asistencia */
+        .img-recortada {
+            width: 100%;
+            aspect-ratio: 4 / 2.5;
+            /* Ajusta la proporción para cortar lo de abajo */
+            object-fit: cover;
+            object-position: top;
+            /* Mantiene la parte de arriba intacta */
+            border-radius: 10px;
+            margin-bottom: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: block;
+        }
+
+        /* Efecto al pasar el mouse sobre la imagen de regalos */
+        .clickable-img {
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .clickable-img:hover {
+            transform: scale(1.02);
+        }
 
         /* Temporizador */
-        .countdown { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
-        .time-box { background: var(--cream); padding: 10px 15px; border-radius: 8px; border: 1px solid #e2e0d8; min-width: 70px; }
-        .time-box span { display: block; font-size: 1.8rem; font-weight: bold; color: var(--sage-dark); }
-        .time-box small { font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; }
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .time-box {
+            background: var(--cream);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #e2e0d8;
+            min-width: 65px;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: var(--sage-dark);
+        }
+
+        .time-box small {
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
 
         /* Botones */
-        .btn-group { display: flex; justify-content: center; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
         .btn {
-            padding: 12px 24px; border-radius: 30px; text-decoration: none;
-            font-size: 0.9rem; letter-spacing: 1px; font-weight: 600;
-            transition: all 0.3s ease; border: none; cursor: pointer;
+            padding: 12px 24px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
             text-transform: uppercase;
             display: inline-block;
         }
-        .btn-primary { background: var(--sage-green); color: white; }
-        .btn-primary:hover { background: var(--sage-dark); transform: translateY(-2px); }
-        .btn-outline { border: 1px solid var(--sage-green); color: var(--sage-green); background: transparent; }
-        .btn-outline:hover { background: var(--sage-green); color: white; }
+
+        .btn-primary {
+            background: var(--sage-green);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--sage-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--sage-green);
+            color: var(--sage-green);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--sage-green);
+            color: white;
+        }
 
         /* Formulario RSVP */
-        .form-group { margin-bottom: 15px; text-align: left; }
-        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: var(--sage-dark); }
-        input, select {
-            width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px;
-            font-family: var(--font-serif);
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
         }
-        
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: var(--sage-dark);
+            font-weight: 600;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            background: var(--cream);
+        }
+
         /* Botón música */
         .btn-musica {
-            position: fixed; bottom: 20px; right: 20px; background: var(--sage-green);
-            color: white; border: none; border-radius: 50%; width: 50px; height: 50px;
-            font-size: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            z-index: 1000; display: none; align-items: center; justify-content: center;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--sage-green);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
         }
-        
-        /* Estilos Ventana Emergente QR */
-        .gift-icon { font-size: 2.5rem; margin-bottom: 10px; }
-        .gift-text { font-size: 0.95rem; margin-bottom: 25px; padding: 0 10px; }
-        
-        .transfer-title { 
-            font-family: var(--font-script); 
-            font-size: 2.8rem; 
-            color: var(--sage-green); 
-            text-transform: none;
-            letter-spacing: 0;
-            margin-bottom: 10px;
-        }
-        
-        .transfer-text { font-size: 0.9rem; color: #666; margin-bottom: 20px; padding: 0 15px; }
-        
+
+        /* ----- VENTANA EMERGENTE (MODAL QR) ----- */
         .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
             background: rgba(0, 0, 0, 0.6);
-            display: flex; justify-content: center; align-items: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             z-index: 2000;
-            opacity: 0; visibility: hidden;
+            opacity: 0;
+            visibility: hidden;
             transition: opacity 0.4s ease, visibility 0.4s ease;
             backdrop-filter: blur(3px);
         }
-        
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .modal-content {
             background: var(--cream);
             padding: 40px 20px 30px;
@@ -199,28 +348,63 @@
             width: 350px;
             transform: translateY(30px) scale(0.95);
             transition: transform 0.4s ease;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
             border: 2px solid var(--sage-green);
         }
-        
-        .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
-        
-        .close-btn {
-            position: absolute; top: 10px; right: 15px;
-            font-size: 2rem; color: var(--sage-dark);
-            cursor: pointer; border: none; background: transparent;
-            line-height: 1; transition: transform 0.2s;
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
         }
-        
-        .close-btn:hover { transform: scale(1.2); }
-        
-        .modal-content .qr-image {
-            width: 200px; height: 200px; object-fit: contain; margin-bottom: 15px;
-            border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2rem;
+            color: var(--sage-dark);
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            line-height: 1;
+            transition: transform 0.2s;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .qr-image {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             border: 1px solid #e2e0d8;
+        }
+
+        .transfer-title {
+            font-family: var(--font-script);
+            font-size: 2.8rem;
+            color: var(--sage-green);
+            margin-bottom: 10px;
+        }
+
+        .account-owner {
+            font-weight: 600;
+            color: var(--sage-dark);
+            font-size: 1.1rem;
+        }
+
+        .account-number {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #555;
+            margin-top: 5px;
         }
     </style>
 </head>
+
 <body>
 
     <!-- Audio Oculto -->
@@ -229,64 +413,71 @@
     </audio>
     <button id="btnMusica" class="btn-musica">🔊</button>
 
-    <!-- PANTALLA INICIAL: IMAGEN Y SELLO CLICABLE -->
+    <!-- PANTALLA INICIAL: SOBRE -->
     <div id="envelope-screen">
         <div class="image-container">
-            <img src="boda1.jpeg" alt="Fondo Invitación" class="base-img">
-            <img src="boda1.jpeg" alt="Abrir Invitación" class="seal-img" id="sealBtn" title="Haz clic en el sello para abrir">
+            <img src="Index.jpg" alt="Fondo Invitación" class="base-img">
+            <img src="Index.jpg" alt="Abrir Invitación" class="seal-img" id="sealBtn"
+                title="Haz clic en el sello para abrir">
             <div class="pulse-ring"></div>
         </div>
     </div>
 
     <!-- PANTALLA DETALLES REVELADOS -->
     <div id="details-screen">
-        
-        <!-- Bienvenida y Temporizador -->
+
+        <!-- SECCIÓN 1: Foto Niños / Versículo -->
         <div class="section-box">
-            <h1>¡Nos Casamos!</h1>
-            <p>Nos encantaría que seas parte de este momento tan especial para nosotros.</p>
-            
+            <img src="Salmo.jpg" alt="Nuestra Historia" class="content-img">
+        </div>
+
+        <!-- SECCIÓN 2: Fecha y Ubicación -->
+        <div class="section-box">
+            <img src="fecha.jpg" alt="Fecha y Lugar" class="content-img">
+
+            <!-- Contador justo debajo de la fecha -->
             <div class="countdown" id="countdown">
                 <div class="time-box"><span id="days">00</span><small>Días</small></div>
                 <div class="time-box"><span id="hours">00</span><small>Hrs</small></div>
                 <div class="time-box"><span id="minutes">00</span><small>Min</small></div>
                 <div class="time-box"><span id="seconds">00</span><small>Seg</small></div>
             </div>
-        </div>
 
-        <!-- Ubicación -->
-        <div class="section-box">
-            <h3>Cuándo y Dónde</h3>
-            <p><strong>Sábado, 11 de Diciembre de 2027</strong><br>17:00 Hrs</p>
-            <p><strong>Av. Antonio Guzmán Fernández</strong><br>Ciudad de San Francisco de Macorís</p>
+            <!-- Botones de GPS -->
             <div class="btn-group">
-                <a href="https://maps.app.goo.gl/Bk2YDazup2tdxG7BA" target="_blank" class="btn btn-outline">📍 Google Maps</a>
-                <a href="https://ul.waze.com/ul?ll=19.28795508%2C-70.27244760&navigate=yes&zoom=17&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank" class="btn btn-outline">🚗 Waze</a>
+                <a href="https://maps.app.goo.gl/Bk2YDazup2tdxG7BA" target="_blank" class="btn btn-outline">📍 Google
+                    Maps</a>
+                <a href="https://ul.waze.com/ul?ll=19.28795508%2C-70.27244760&navigate=yes&zoom=17" target="_blank"
+                    class="btn btn-outline">🚗 Waze</a>
             </div>
         </div>
 
-        <!-- Recepción y Dress Code -->
+        <!-- SECCIÓN 3: Itinerario -->
         <div class="section-box">
-            <h3>Detalles</h3>
-            <p><strong>Código de Vestimenta:</strong> Formal<br><small>(Favor de evitar el color blanco)</small></p>
+            <img src="itinerario.jpg" alt="Nuestro Itinerario" class="content-img">
         </div>
 
-       <!-- Sugerencia de Regalos -->
+        <!-- SECCIÓN 4: Código de Vestimenta -->
         <div class="section-box">
-            <div class="gift-icon">🎁</div>
-            <h2>Sugerencia de Regalos</h2>
-            <p class="gift-text">El mejor regalo es tu presencia, pero si deseas tener un detalle con nosotros, te dejamos esta opción:</p>
-            <button id="btnOpenQr" class="btn btn-outline" style="margin-top: 10px; font-size: 1rem;">💌 Ver Datos Bancarios</button>
+            <img src="Codigovestimenta.jpg" alt="Código de Vestimenta" class="content-img">
         </div>
 
-        <!-- Formulario Inteligente RSVP -->
+        <!-- SECCIÓN 5: Sugerencia de Regalos (IMAGEN CLICABLE) -->
+        <div class="section-box" style="padding: 10px;">
+            <!-- Al tocar esta imagen, se abrirá el QR -->
+            <img src="Sugerenciaregalo.jpg" alt="Sugerencia de Regalo" class="content-img clickable-img" id="btnOpenQr"
+                title="Haz clic para ver datos bancarios">
+        </div>
+
+        <!-- SECCIÓN 6: Formulario de Asistencia -->
         <div class="section-box">
-            <h2>Confirmar Asistencia</h2>
-            <p>Por favor confirma antes del 1 de Noviembre.</p>
-            
-            <form id="rsvpForm" style="margin-top: 20px;">
+            <!-- Usamos la nueva clase para que el código corte la parte falsa -->
+            <img src="Formulario.jpg" alt="Confirmar Asistencia" class="img-recortada">
+
+            <!-- El formulario funcional queda justo debajo de la imagen -->
+            <form id="rsvpForm" style="margin-top: 10px;">
                 <div class="form-group">
-                    <label>Nombre y Apellido</label>
+                    <label>Escribe tu Nombre y Apellido:</label>
                     <input type="text" id="guestName" required placeholder="Ej: Juan Pérez">
                 </div>
                 <div class="form-group">
@@ -297,7 +488,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Acompañantes (Incluyéndote)</label>
+                    <label>Acompañantes (Incluyéndote):</label>
                     <input type="number" id="guestCount" min="0" max="2" value="1" required>
                 </div>
                 <div class="form-group">
@@ -311,116 +502,132 @@
             </form>
         </div>
 
-    </div>
+        <!-- VENTANA EMERGENTE PARA EL QR -->
+        <div id="qrModal" class="modal-overlay">
+            <div class="modal-content">
+                <button id="btnCloseQr" class="close-btn">&times;</button>
+                <h3 class="transfer-title">Transferencia</h3>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">No es necesario estar cerca, para hacer
+                    sentir el amor y el cariño.</p>
 
-    <!-- VENTANA EMERGENTE PARA EL QR -->
-    <div id="qrModal" class="modal-overlay">
-        <div class="modal-content">
-            <button id="btnCloseQr" class="close-btn">&times;</button>
-            <h3 class="transfer-title" style="font-size: 2.3rem;">Transferencia</h3>
-            <p class="transfer-text" style="margin-bottom: 20px;">No es necesario estar cerca, para hacer sentir el amor y el cariño.</p>
-            
-            <img src="qr BanREservas.jpg" alt="Código QR para transferencia" class="qr-image" onerror="this.src='https://via.placeholder.com/200?text=Sube+tu+QR+aqui'">
-            
-            <p class="account-owner">Titular: Jaime Fernández</p>
-            <p class="account-number">Cuenta: 9607086385 (Banco Banreservas)</p>
+                <img src="qr-banreservas.jfif" alt="Código QR" class="qr-image"
+                    onerror="this.src='https://via.placeholder.com/200?text=Sube+tu+QR+aqui'">
+
+                <p class="account-owner">Titular: Jaime Fernández</p>
+                <p class="account-number">Cuenta: 9607086385<br>(Banco Banreservas)</p>
+            </div>
         </div>
-    </div>
 
-    <script>
-        // 1. Lógica de la Pantalla Inicial
-        const envelopeScreen = document.getElementById('envelope-screen');
-        const detailsScreen = document.getElementById('details-screen');
-        const musica = document.getElementById('musicaFondo');
-        const btnMusica = document.getElementById('btnMusica');
-        const sealBtn = document.getElementById('sealBtn');
+        <script>
+            // 1. Lógica de la Pantalla Inicial
+            const envelopeScreen = document.getElementById('envelope-screen');
+            const detailsScreen = document.getElementById('details-screen');
+            const musica = document.getElementById('musicaFondo');
+            const btnMusica = document.getElementById('btnMusica');
+            const sealBtn = document.getElementById('sealBtn');
 
-        musica.volume = 0.5;
-        
-        // ARREGLO PARA CELULARES: Capturamos la función de abrir en una variable
-        const abrirInvitacion = (e) => {
-            if(e) e.preventDefault(); // Esta línea es la que elimina el bug del doble toque fantasma
-            
-            musica.play().catch(e => console.log("Auto-play bloqueado por el navegador"));
-            btnMusica.style.display = 'flex';
+            musica.volume = 0.5;
 
-            envelopeScreen.classList.add('fade-out');
-            detailsScreen.style.display = 'block';
-            
-            setTimeout(() => {
-                detailsScreen.classList.add('show-details');
-            }, 100); 
-        };
+            // Solución al toque en celulares
+            const abrirInvitacion = (e) => {
+                if (e) e.preventDefault();
 
-        // Escuchamos el clic normal (PC) y el toque nativo de celular (touchstart)
-        sealBtn.addEventListener('click', abrirInvitacion);
-        sealBtn.addEventListener('touchstart', abrirInvitacion);
+                musica.play().catch(e => console.log("Auto-play bloqueado"));
+                btnMusica.style.display = 'flex';
 
-        // 2. Control de Música
-        btnMusica.addEventListener('click', () => {
-            if (musica.paused) {
-                musica.play();
-                btnMusica.innerHTML = '🔊';
-            } else {
-                musica.pause();
-                btnMusica.innerHTML = '🔇';
-            }
-        });
+                envelopeScreen.classList.add('fade-out');
+                detailsScreen.style.display = 'block';
 
-        // 3. Temporizador (Cuenta Regresiva)
-        const weddingDate = new Date('December 11, 2027 17:00:00').getTime();
+                setTimeout(() => {
+                    detailsScreen.classList.add('show-details');
+                }, 100);
+            };
 
-        setInterval(() => {
-            const now = new Date().getTime();
-            const distance = weddingDate - now;
+            sealBtn.addEventListener('click', abrirInvitacion);
+            sealBtn.addEventListener('touchstart', abrirInvitacion);
 
-            if (distance < 0) return; 
+            // 2. Control de Música
+            btnMusica.addEventListener('click', () => {
+                if (musica.paused) {
+                    musica.play();
+                    btnMusica.innerHTML = '🔊';
+                } else {
+                    musica.pause();
+                    btnMusica.innerHTML = '🔇';
+                }
+            });
 
-            document.getElementById('days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-            document.getElementById('hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-            document.getElementById('minutes').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            document.getElementById('seconds').innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        }, 1000);
+            // 3. Temporizador (Cuenta Regresiva)
+            const weddingDate = new Date('December 11, 2027 17:00:00').getTime();
 
-        // 4. Formulario de WhatsApp Dinámico
-        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            const name = document.getElementById('guestName').value;
-            const attendance = document.getElementById('attendance').value;
-            const count = document.getElementById('guestCount').value;
-            const numeroElegido = document.getElementById('recipient').value;
-    
-            let mensaje = `¡Hola Jaime y Mariel!\nSoy *${name}*.\n\nQuería confirmarles que *${attendance}* a su boda.`;
-    
-            if(attendance.includes("Si")) {
-                mensaje += `\nSeremos un total de *${count} persona(s)*.`;
-            }
-    
-            mensaje += `\n\n¡Felicidades! 🎉`;
+            setInterval(() => {
+                const now = new Date().getTime();
+                const distance = weddingDate - now;
 
-            const urlEncoded = encodeURIComponent(mensaje);
-            window.open(`https://wa.me/${numeroElegido}?text=${urlEncoded}`, '_blank');
-        });
+                if (distance < 0) return;
 
-        // 5. Lógica de la Ventana Emergente (QR)
-        const btnOpenQr = document.getElementById('btnOpenQr');
-        const btnCloseQr = document.getElementById('btnCloseQr');
-        const qrModal = document.getElementById('qrModal');
+                document.getElementById('days').innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById('hours').innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }, 1000);
 
-        btnOpenQr.addEventListener('click', () => {
-            qrModal.classList.add('active');
-        });
+            // 4. Formulario de WhatsApp Dinámico
+            document.getElementById('rsvpForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const name = document.getElementById('guestName').value;
+                const attendance = document.getElementById('attendance').value;
+                const count = document.getElementById('guestCount').value;
+                const numeroElegido = document.getElementById('recipient').value;
 
-        btnCloseQr.addEventListener('click', () => {
-            qrModal.classList.remove('active');
-        });
+                let mensaje = `¡Hola Jaime y Mariel!\nSoy *${name}*.\n\nQuería confirmarles que *${attendance}* a su boda.`;
 
-        qrModal.addEventListener('click', (e) => {
-            if(e.target === qrModal) {
+                if (attendance.includes("Si")) {
+                    mensaje += `\nSeremos un total de *${count} persona(s)*.`;
+                }
+
+                mensaje += `\n\n¡Felicidades! 🎉`;
+
+                const urlEncoded = encodeURIComponent(mensaje);
+                window.open(`https://wa.me/${numeroElegido}?text=${urlEncoded}`, '_blank');
+            });
+
+            // 5. Lógica de la Ventana Emergente (QR) activada por la imagen
+            const btnOpenQr = document.getElementById('btnOpenQr');
+            const btnCloseQr = document.getElementById('btnCloseQr');
+            const qrModal = document.getElementById('qrModal');
+
+            btnOpenQr.addEventListener('click', () => {
+                qrModal.classList.add('active');
+            });
+
+            btnCloseQr.addEventListener('click', () => {
                 qrModal.classList.remove('active');
-            }
-        });
-    </script>
+            });
+
+            qrModal.addEventListener('click', (e) => {
+                if (e.target === qrModal) {
+                    qrModal.classList.remove('active');
+                }
+            });
+            // 6. Detener música al minimizar la página o cambiar de pestaña (Especial para celulares)
+            let estabaSonando = false;
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    // El usuario minimizó la página o cambió de pestaña
+                    estabaSonando = !musica.paused; // Guardamos si la música estaba encendida
+                    musica.pause();
+                    btnMusica.innerHTML = '🔇';
+                } else {
+                    // El usuario regresó a la invitación
+                    if (estabaSonando) {
+                        musica.play().catch(e => console.log("Auto-play bloqueado al regresar"));
+                        btnMusica.innerHTML = '🔊';
+                    }
+                }
+            });
+        </script>
 </body>
+
 </html>
-        
